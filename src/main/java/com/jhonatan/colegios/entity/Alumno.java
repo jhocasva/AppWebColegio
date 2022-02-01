@@ -16,6 +16,9 @@ public class Alumno {
         this.apellido = apellido;
     }
 
+    public Alumno() {
+    }
+
     public String getIdentificacion() {
         return identificacion;
     }
