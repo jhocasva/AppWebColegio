@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-public class ServicioWebAlumno {
+public class
+ServicioWebAlumno {
     @Autowired
     private RepositorioAlumno repositorioAlumno;
 
@@ -27,8 +28,12 @@ public class ServicioWebAlumno {
 
     @GetMapping("/alumnos/{id}")
     public Alumno consultarAlumnoPorId(@PathVariable String id){
-        Alumno alumno= repositorioAlumno.findById(id).get();
-        return alumno;
+        Optional<Alumno> alumnoOpt = repositorioAlumno.findById(id);
+        if(alumnoOpt.isPresent()){
+            return alumnoOpt.get();
+        }else{
+            return null;
+        }
     }
 
     @DeleteMapping("/alumnos/{id}")

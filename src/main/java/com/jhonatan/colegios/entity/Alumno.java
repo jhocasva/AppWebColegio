@@ -1,7 +1,10 @@
 package com.jhonatan.colegios.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Alumno {
@@ -9,14 +12,20 @@ public class Alumno {
    private String  identificacion;
    private String nombre;
    private String apellido;
-
-    public Alumno(String identificacion, String nombre, String apellido) {
-        this.identificacion = identificacion;
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
+   @ManyToMany
+   @JoinTable(
+           name= "materia_alumno",
+           joinColumns = @JoinColumn(
+                   name = "idalumno"
+           ),
+           inverseJoinColumns = @JoinColumn(
+                   name= "idmateria"
+           )
+   )
+   private Set<Materia> materias;
 
     public Alumno() {
+         this.materias = new HashSet<>();
     }
 
     public String getIdentificacion() {
@@ -41,5 +50,13 @@ public class Alumno {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public Set<Materia> getMaterias() {
+        return materias;
+    }
+
+    public void setMaterias(Set<Materia> materias) {
+        this.materias = materias;
     }
 }
