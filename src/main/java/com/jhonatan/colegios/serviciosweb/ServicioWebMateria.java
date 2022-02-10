@@ -5,6 +5,7 @@ import com.jhonatan.colegios.repositorio.RepositorioMateria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -61,6 +62,17 @@ public class ServicioWebMateria {
         }
         return respuesta;
     }
+
+    /*@GetMapping("/materias")
+    public Materia traerMateriaPornombre(@RequestParam String nombre){
+       return  respositorioMateria.findByNombre(nombre);
+    }*/
+
+    @GetMapping("/materias")
+    public List<String> consultarAlumnosRegistradosMateria(@RequestParam String codigoMateria){
+        return  respositorioMateria.traerAlumnosPorMateria(codigoMateria);
+    }
+
 
 
 }

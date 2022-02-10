@@ -12,11 +12,9 @@ public class Materia {
     private String codigo;
     private String nombre;
     private String intensidad_horas;
-    @ManyToMany (mappedBy = "materias")
-    private Set<Alumno> alumnos;
+
 
     public Materia() {
-        alumnos = new HashSet<>();
     }
 
     public String getCodigo() {
@@ -43,11 +41,5 @@ public class Materia {
         this.intensidad_horas = intensidad_horas;
     }
 
-    public Set<Alumno> getAlumnos() {
-        return alumnos;
-    }
 
-    public void setAlumnos(Set<Alumno> alumnos) {
-        this.alumnos = alumnos;
-    }
 }

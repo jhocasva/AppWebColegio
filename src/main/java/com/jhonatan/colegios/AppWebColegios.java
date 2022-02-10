@@ -10,5 +10,7 @@ public class  AppWebColegios{
         SpringApplication.run(AppWebColegios.class, args);
     }
 
+
+
 }
 
