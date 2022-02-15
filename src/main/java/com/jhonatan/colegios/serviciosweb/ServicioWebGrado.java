@@ -32,8 +32,8 @@ public class ServicioWebGrado {
 
     @DeleteMapping("/grados/{id}")
     public String borrarGradoPorId(@PathVariable  String id){
-        String reesuesta = servicioGrado.borrarGradoPorId(id);
-        return reesuesta;
+        String respuesta = servicioGrado.borrarGradoPorId(id);
+        return respuesta;
     }
 
 }
