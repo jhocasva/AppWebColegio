@@ -1,65 +1,39 @@
 package com.jhonatan.colegios.serviciosweb;
 
 import com.jhonatan.colegios.entity.Materia;
-import com.jhonatan.colegios.repositorio.RepositorioMateria;
+import com.jhonatan.colegios.service.ServicioMateria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class ServicioWebMateria {
+
     @Autowired
-    private RepositorioMateria  respositorioMateria;
+    private ServicioMateria servicioMateria;
 
     @PostMapping("/materias")
     public String crearMateria(@RequestBody Materia materia){
-        String respuesta;
-     if(respositorioMateria.existsById(materia.getCodigo())){
-         respuesta = "la materia ya existe";
-     } else{
-         respositorioMateria.save(materia);
-
-         respuesta = "la materia se creó exitosamente";
-     }
+        String respuesta = servicioMateria.crearMateria(materia);
      return respuesta;
     }
 
     @GetMapping("/materias/{codigo}")
     public Materia consultarMateriaPorCodigo(@PathVariable  String codigo){
-        Optional<Materia> materiaOpt= respositorioMateria.findById(codigo);
-
-        if(materiaOpt.isPresent()){
-            return  materiaOpt.get();
-        } else{
-            return  null;
-        }
-
+        Materia materia = servicioMateria.consultarMateriaPorCodigo(codigo);
+        return  materia;
     }
 
     @DeleteMapping("/materias/{codigo}")
     public String borrarMateriaPorCodigo(@PathVariable String codigo){
-          String respuesta;
-        if(respositorioMateria.existsById(codigo)){
-            respositorioMateria.deleteById(codigo);
-            respuesta = "se borró la materia exitosamente";
-        } else {
-            respuesta = "no existe una materia con ese codigo";
-        }
+          String respuesta = servicioMateria.borrarMateriaPorCodigo(codigo);
         return respuesta;
     }
 
-    @PutMapping("/materias")
-    public String actualizarMateria(@RequestBody Materia materia){
-        String respuesta;
-
-        if(respositorioMateria.existsById(materia.getCodigo())){
-           respositorioMateria.save(materia);
-           respuesta = "la materia se actualizó correctamente";
-        } else {
-            respuesta = "la materia no existe";
-        }
+    @PutMapping("/materias/{id}")
+    public String actualizarMateria(@PathVariable String id, @RequestBody Materia materia){
+        String respuesta = servicioMateria.actualizarMateria(id, materia);
         return respuesta;
     }
 
@@ -70,9 +44,6 @@ public class ServicioWebMateria {
 
     @GetMapping("/materias")
     public List<String> consultarAlumnosRegistradosMateria(@RequestParam String codigoMateria){
-        return  respositorioMateria.traerAlumnosPorMateria(codigoMateria);
+        return  servicioMateria.consultarAlumnosRegistradosMateria(codigoMateria);
     }
-
-
-
 }
